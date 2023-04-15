@@ -1,3 +1,9 @@
+/*
+Written by Ashutosh Vishwakarma
+Date 16-04-2023
+*/
+
+
 #include "Vector_class.h"
 #include <iostream>
 #include <math.h>

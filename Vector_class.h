@@ -1,3 +1,9 @@
+/*
+Written by Ashutosh Vishwakarma
+Date 16-04-2023
+*/
+
+
 #pragma once
 #ifndef Vector_class
 #define Vector_class
