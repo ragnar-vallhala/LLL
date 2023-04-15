@@ -38,12 +38,12 @@ public:
     /*
     Takes input for the vector elements from terminal
     */
-    void inputTerminal();
+    void inputVector();
 
     /*
     Prints the vector elements to terminal
     */
-    void printTerminal();
+    void printVector();
 
     /*
     Returns eucledian norm of the vector
@@ -75,5 +75,46 @@ public:
 
 
 };
+
+
+
+class Basis {
+private:
+    int numVec;
+    int dimVec;
+    Vector* basis;
+    Vector* gramSch;
+
+public:
+
+    /*
+    Deafault constructor
+    */
+    Basis() = default;
+
+    /*
+    Constructor
+    @param l: number of vector
+    @param k: dimension of vector
+    */
+    Basis(int l, int k);
+
+    /*
+    Prints all vectors of basis
+    */
+    void printBasis();
+
+    /*
+    Takes input of basis
+    */
+    void inputBasis();
+
+    /*
+    Updates Gram Schimdth
+    */
+    void updGramSch();
+
+};
+
 
 #endif

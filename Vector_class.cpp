@@ -22,14 +22,14 @@ Vector::Vector(Vector& vector)
     for (int i{}; i < this->dim; i++) { this->vec[i] = vector.vec[i]; }
 }
 
-void Vector::inputTerminal()
+void Vector::inputVector()
 {
     for (int i{}; i < this->dim; i++) {
         std::cin >> this->vec[i];
     }
 }
 
-void Vector::printTerminal()
+void Vector::printVector()
 {
     std::cout << "(";
     for (int i{}; i < this->dim; i++) {
@@ -85,3 +85,50 @@ Vector Vector::operator*(double num)
 }
 
 
+Basis::Basis(int l, int k)
+{
+    this->numVec = l;
+    this->dimVec = k;
+    this->basis = new Vector[numVec];
+    this->gramSch = new Vector[numVec];
+
+    Vector temp(dimVec);
+
+    for (int i{}; i < numVec; i++) {
+       this->basis[i] = temp;
+       this->gramSch[i] = temp;
+    }
+}
+
+void Basis::printBasis()
+{
+    std::cout << '{';
+    for (int i{}; i < this->numVec; i++) {
+        this->basis[i].printVector();
+        if (i < this->numVec - 1) std::cout << ", ";
+    }
+    std::cout << "}\n";
+}
+
+void Basis::inputBasis()
+{
+    for (int i{}; i < this->numVec; i++) {
+        this->basis[i].inputVector();
+    }
+
+}
+
+void Basis::updGramSch()
+{
+    this->gramSch[0] = this->basis[0];
+    for (int i{ 1 }; i < this->numVec; i++) {
+        this->gramSch[i] = this->basis[i];
+
+        Vector summation(this->dimVec);     //summation of vectors with their projection coefficients
+        summation = summation - summation;  //to set all component to zero
+        for (int j{ 0 }; j < i; j++) {
+            double uji = (this->basis[i].dot(this->gramSch[j])) / (pow(this->gramSch[j].norm(), 2));
+
+        }
+    }
+}
