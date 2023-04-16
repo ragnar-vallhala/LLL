@@ -11,10 +11,24 @@ Date 16-04-2023
 
 
 int main() {
-    Basis b(3,3);
-    b.inputBasis();
-    b.LLL();
-    b.printBasis();
+    bool a = true;
+    while (a) {
+        int n, m;
+        std::cout << "Enter row x width separated by space" << std::endl;
+        std::cin >> n >> m;
+        Basis b(n, m);
+        std::cout << "Enter the " << n << "x" << m << " basis" << std::endl;
+        b.inputBasis();
+        b.LLL();
+        std::cout << "Output " << std::endl;
+        b.printBasis();
+
+        std::cout << "Do you want to continue? (y/n)" << std::endl;
+        char in;
+        std::cin >> in;
+        if (in == 'n' || in == 'N') a = false;
+    }
+    
 
 
     return 0;
