@@ -1,5 +1,6 @@
 /*
 Written by Ashutosh Vishwakarma
+And Hitesh Choudhary
 Date 16-04-2023
 */
 
@@ -10,7 +11,7 @@ Date 16-04-2023
 
 
 int main() {
-    Basis b(2,2);
+    Basis b(3,3);
     b.inputBasis();
     b.LLL();
     b.printBasis();

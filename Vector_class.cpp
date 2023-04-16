@@ -1,5 +1,6 @@
 /*
 Written by Ashutosh Vishwakarma
+And Hitesh Choudhary
 Date 16-04-2023
 */
 
@@ -107,7 +108,7 @@ void Basis::printBasis()
     std::cout << '{';
     for (int i{}; i < this->numVec; i++) {
         this->basis[i].printVector();
-        if (i < this->numVec - 1) std::cout << ", ";
+        //if (i < this->numVec - 1) std::cout << ", ";
     }
     std::cout << "}\n";
 }
