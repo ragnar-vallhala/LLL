@@ -71,7 +71,7 @@ public:
     Overload of * operator
     Gives scalar multiple
     */
-    Vector operator* (double num);
+    Vector operator* (float num);
 
 
 };
@@ -105,6 +105,11 @@ public:
     void printBasis();
 
     /*
+    Prints all vectors of basis
+    */
+    void printGramSch();
+
+    /*
     Takes input of basis
     */
     void inputBasis();
@@ -114,7 +119,39 @@ public:
     */
     void updGramSch();
 
+    /*
+    Return projection coefficient for  pair (j,i) where j<i
+    @param i
+    @param j
+    */
+    float projetionCoff(int j, int i);
+
+    /*
+    Return round offed projection coefficient for  pair (j,i) where j<i
+    @param i
+    @param j
+    */
+    int rndProjetionCoff(int j, int i);
+    
+
+    /*
+    Operates on basis to size reduce
+    */
+    void sizeReduce();
+
+
+    /*
+    returns true if lovasz condtion is true
+    */
+    bool lovasz(int i);
+
+    /*
+     reduces basis to LLL
+    */
+    void LLL();
+
 };
 
+    
 
 #endif

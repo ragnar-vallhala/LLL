@@ -10,9 +10,11 @@ Date 16-04-2023
 
 
 int main() {
-    Vector v1(10);
-    v1 = v1 - v1;
-    v1.printVector();
+    Basis b(2,2);
+    b.inputBasis();
+    b.LLL();
+    b.printBasis();
+
 
     return 0;
 }

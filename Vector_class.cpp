@@ -75,7 +75,7 @@ double Vector::dot(Vector vector)
     return dotPrd;
 }
 
-Vector Vector::operator*(double num)
+Vector Vector::operator*(float num)
 {   
     Vector mult(this->dim);
     for (int i{}; i < this->dim; i++) {
@@ -92,11 +92,13 @@ Basis::Basis(int l, int k)
     this->basis = new Vector[numVec];
     this->gramSch = new Vector[numVec];
 
-    Vector temp(dimVec);
+    
 
     for (int i{}; i < numVec; i++) {
-       this->basis[i] = temp;
-       this->gramSch[i] = temp;
+       Vector temp1(dimVec);
+       Vector temp2(dimVec);
+       this->basis[i] = temp1;
+       this->gramSch[i] = temp2;
     }
 }
 
@@ -105,6 +107,16 @@ void Basis::printBasis()
     std::cout << '{';
     for (int i{}; i < this->numVec; i++) {
         this->basis[i].printVector();
+        if (i < this->numVec - 1) std::cout << ", ";
+    }
+    std::cout << "}\n";
+}
+
+void Basis::printGramSch()
+{
+    std::cout << '{';
+    for (int i{}; i < this->numVec; i++) {
+        this->gramSch[i].printVector();
         if (i < this->numVec - 1) std::cout << ", ";
     }
     std::cout << "}\n";
@@ -127,8 +139,72 @@ void Basis::updGramSch()
         Vector summation(this->dimVec);     //summation of vectors with their projection coefficients
         summation = summation - summation;  //to set all component to zero
         for (int j{ 0 }; j < i; j++) {
-            double uji = (this->basis[i].dot(this->gramSch[j])) / (pow(this->gramSch[j].norm(), 2));
+            float uji = projetionCoff(j, i);
+            
+            Vector *temp = new Vector;
 
+            *temp = this->gramSch[j] * uji;
+            summation = summation + *temp;
+
+            delete(temp);
+        }
+        this->gramSch[i] = this->gramSch[i] - summation;
+    }
+}
+
+float Basis::projetionCoff(int j, int i)
+{
+    float temp = (this->basis[i].dot(this->gramSch[j])) / (pow(this->gramSch[j].norm(), 2));
+        return temp;
+}
+
+int Basis::rndProjetionCoff(int j, int i)
+{   
+    float x = projetionCoff(j, i);
+    int gif = x;
+    if (x < 0 && gif!=x) gif--;
+    if (gif + 0.5 < x) return gif + 1;
+    return gif;
+}
+
+void Basis::sizeReduce()
+{
+    this->updGramSch();
+    for (int i{ 1 }; i < this->numVec; i++) {
+
+        Vector summation(this->dimVec);     //summation of vectors with their projection coefficients
+        summation = summation - summation;  //to set all component to zero
+        for (int j{ 0 }; j < i; j++) {
+            float uji = rndProjetionCoff(j, i);
+
+            Vector* temp = new Vector;
+
+            *temp = this->basis[j] * uji;
+            summation = summation + *temp;
+            delete(temp);
+        }
+        this->basis[i] = this->basis[i] - summation;
+
+    }
+}
+
+bool Basis::lovasz(int i)
+{
+    
+    return (3.0/4-(pow(this->projetionCoff(i,i+1),2)))*(pow(this->basis[i].norm(),2))<=(pow(this->basis[i+1].norm(),2));
+}
+
+void Basis::LLL()
+{
+    this->sizeReduce();
+    for (int i{}; i < this->numVec - 1; i++) {
+        if (!this->lovasz(i)) {
+            Vector temp = this->basis[i];
+            this->basis[i] = this->basis[i + 1];
+            this->basis[i + 1] = temp;
+            this->LLL();
+            break;
         }
     }
+    std::cout << "Successfully executed." << std::endl;
 }
